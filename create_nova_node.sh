@@ -1,3 +1,5 @@
+#!/bin/bash 
+
 #
 # Copyright 2012, Deutsche Telekom Laboratories 
 #
@@ -14,29 +16,20 @@
 # limitations under the License.
 #
 
-#VBoxManage list vms
-#"ubuntu__8063" {2bbef874-c459-4ece-afcb-a85ac6d674a4}
-#"ubuntu__4475" {84a1d4b5-9848-4c28-8cf2-99110315ce99}
-#"ubuntu__3289" {2a9c7e3b-fa4c-47bc-867d-4bdaad02e67f}
 
-vm_names = lambda { |vm| vm.match(/"(.*)".*\{(.*)\}/)[1]} 
-running_vms = %x{VBoxManage list runningvms}.map(&vm_names)
-all_vms = %x{VBoxManage list vms}.map(&vm_names)
+[ -z $1 ] && echo "you must provide a maschine name" && exit
+
+MASCHINE_NAME=$1
+
+echo "creating $MASCHINE_NAME"
 
 
-running_vms.each do |vm|
-  puts "stopping #{vm}" 
-  %x[VBoxManage controlvm #{vm} poweroff]  
-  puts "stopped #{vm}"	
-end
+VBoxManage unregistervm "$MASCHINE_NAME" --delete
+VBoxManage clonevm crowbar-base-box --name "$MASCHINE_NAME" --register
 
-sleep 10
+VBoxManage modifyvm "$MASCHINE_NAME" --memory 2048 --ostype Debian_64  
+VBoxManage modifyvm "$MASCHINE_NAME" --vrdeport 5010-5030 --ioapic on #ioapic for centos pxe boot (verify it again)
 
-all_vms.each do |vm|
-  puts "deleting #{vm}" 
-  %x[VBoxManage unregistervm #{vm} --delete]
-  puts "deleted #{vm}"   
-end
+VBoxManage modifyvm "$MASCHINE_NAME" --boot1 net 
 
-
-
+echo "start it with VBoxHeadless -s $MASCHINE_NAME"
