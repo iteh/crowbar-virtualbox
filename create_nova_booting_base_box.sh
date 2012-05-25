@@ -16,6 +16,8 @@
 # limitations under the License.
 #
 
+[ -z $CONFIG_SH_SOURCED ] && source config.sh
+[ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
 MASCHINE_NAME="crowbar-base-box"   
 IF_TYPE=82540EM #virtio causes problems (enumartion of device in ubunut 12.04

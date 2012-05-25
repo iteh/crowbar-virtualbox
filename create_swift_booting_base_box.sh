@@ -16,6 +16,8 @@
 # limitations under the License.
 #
 
+[ -z $CONFIG_SH_SOURCED ] && source config.sh
+[ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
 VMPATH="/"$(VBoxManage list systemproperties|grep "^Default"| cut -d '/' -f 2-)"/swift/"
 DISKPATH_1="/"$VMPATH/"/swift-root.vdi"

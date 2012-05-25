@@ -16,6 +16,8 @@
 # limitations under the License.
 #
 
+[ -z $CONFIG_SH_SOURCED ] && source config.sh
+[ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
 [ -z $1 ] && echo "you must provide a maschine name" && exit
 

@@ -16,35 +16,26 @@
 # limitations under the License.
 #
 
+[ -z $CONFIG_SH_SOURCED ] && source config.sh
+[ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
-# needs some serious cleanup
-ISO="/home/crowbardev/crowbar-iso/share/iso/crowbar-v1.2-openstack-1632-g064b54d-dev.iso"
+[ -z $1 ] && echo "you must provide absolute path to the iso image" && exit
 
+ISO=$1   
 IF_TYPE=82540EM
+ADMIN_MEMORY=2048 
 
-VBoxManage unregistervm crowbar_admin --delete
-VBoxManage clonevm pxe --name crowbar_admin --register
+VBoxManage unregistervm crowbar_admin --delete  
 
-VBoxManage modifyvm crowbar_admin --memory 4096 --ostype Ubuntu_64
+VBoxManage clonevm "$BASE_BOX_NAME" --name crowbar_admin --register
 
-VBoxManage modifyvm crowbar_admin --nic1 hostonly
-VBoxManage modifyvm crowbar_admin --nic2 hostonly
+VBoxManage modifyvm crowbar_admin --memory $ADMIN_MEMORY --ostype Ubuntu_64
+
 VBoxManage modifyvm crowbar_admin --nic3 nat
-VBoxManage modifyvm crowbar_admin --nic4 none
-VBoxManage modifyvm crowbar_admin --macaddress1 080027BA2DAE
-VBoxManage modifyvm crowbar_admin --macaddress2 080027BE8E74
 VBoxManage modifyvm crowbar_admin --macaddress3 auto
-VBoxManage modifyvm crowbar_admin --macaddress4 auto
-VBoxManage modifyvm crowbar_admin --nictype1 $IF_TYPE
-VBoxManage modifyvm crowbar_admin --nictype2 $IF_TYPE
 VBoxManage modifyvm crowbar_admin --nictype3 $IF_TYPE
-VBoxManage modifyvm crowbar_admin --nictype4 $IF_TYPE
-VBoxManage modifyvm crowbar_admin --cableconnected2 off
-VBoxManage controlvm crowbar_admin setlinkstate2 off
-VBoxManage modifyvm crowbar_admin --cableconnected3 off
-VBoxManage controlvm crowbar_admin setlinkstate3 off
-VBoxManage modifyvm crowbar_admin --hostonlyadapter1 vboxnet0
-VBoxManage modifyvm crowbar_admin --hostonlyadapter2 vboxnet1
+VBoxManage modifyvm crowbar_admin --cableconnected3 on
+VBoxManage controlvm crowbar_admin setlinkstate3 on
 VBoxManage storageattach crowbar_admin --storagectl "IDE Controller" --device 0 --port 1 --type dvddrive --medium "$ISO"
 VBoxManage modifyvm crowbar_admin --boot1 disk
 

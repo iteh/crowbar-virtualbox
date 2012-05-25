@@ -21,10 +21,10 @@ A crowbar iso image. See https://github.com/dellcloudedge/crowbar/wiki/Build-Cro
 create_base_nodes_and_hostonly_ifs.sh
 ```
 
-will create the needed networks (default crowbar 122 - 125)
+will create the needed networks (default crowbar 122 - 125) and a base box to clone from
 
 ```
 create_crowbar.sh /path/to/crowbar.iso
 ```              
 
-create a crowbar admin server 
+create a crowbar admin server and delete it first if it exists. 

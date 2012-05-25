@@ -1,3 +1,5 @@
+#!/bin/bash 
+
 #
 # Copyright 2012, Deutsche Telekom Laboratories 
 #
@@ -14,8 +16,11 @@
 # limitations under the License.
 #
 
-/usr/lib/virtualbox/VBoxNetAdpCtl vboxnet4 192.168.124.1 netmask 255.255.255.0
-/usr/lib/virtualbox/VBoxNetAdpCtl vboxnet5 192.168.122.1 netmask 255.255.255.0 
-/usr/lib/virtualbox/VBoxNetAdpCtl vboxnet6 192.168.126.1 netmask 255.255.255.0  
-/usr/lib/virtualbox/VBoxNetAdpCtl vboxnet7 192.168.123.1 netmask 255.255.255.0
+source functions.sh
+
+ensure_vboxnet 4 "192.168.124.1"
+ensure_vboxnet 5 "192.168.122.1"
+ensure_vboxnet 6 "192.168.125.1"
+ensure_vboxnet 7 "192.168.123.1"
+
 
