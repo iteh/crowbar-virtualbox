@@ -31,5 +31,25 @@ ensure_vboxnet () {
     VBoxManage hostonlyif create
   fi
   
-  VBoxManage hostonlyif ipconfig vboxnet$VBOX_NET_NUMBER --ip $VBOX_NET_IP
-}    
+  # hackish reset to something not used so virtualbox sets up everything (including routing)
+  VBoxManage hostonlyif ipconfig vboxnet$VBOX_NET_NUMBER --ip 4.3.2.1 --netmask 255.255.255.0
+  # the real config  
+  VBoxManage hostonlyif ipconfig vboxnet$VBOX_NET_NUMBER --ip $VBOX_NET_IP --netmask 255.255.255.0
+}   
+
+unregister_and_delete_vm () {
+  
+  [ -z $1 ] && echo "you must provide a maschine name as first param" && exit
+  
+  MASCHINE_NAME=$1
+  
+  VMPATH="/"$(VBoxManage list systemproperties|grep "^Default"| cut -d '/' -f 2-)"/"$MASCHINE_NAME"/"
+  DISKPATH="/"$VMPATH/""$MASCHINE_NAME".vdi"
+
+  if [ -f "$DISKPATH"  ] 
+  then 
+    echo "we already have a "$MASCHINE_NAME" instance, deleting it to start with a fresh one"
+    VBoxManage unregistervm "$MASCHINE_NAME" --delete
+    rm -rf "$VMPATH"
+  fi 
+}
