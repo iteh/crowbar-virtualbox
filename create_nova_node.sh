@@ -21,15 +21,33 @@
 
 [ -z $1 ] && echo "you must provide a maschine name" && exit
 
-MASCHINE_NAME=$1
+MASCHINE_NAME=$1 
+
+# start with a fresh one ...
+unregister_and_delete_vm "$MASCHINE_NAME"
 
 echo "creating $MASCHINE_NAME"
 
+VBoxManage clonevm "$BASE_BOX_NAME" --name "$MASCHINE_NAME" --register
 
-VBoxManage unregistervm "$MASCHINE_NAME" --delete
-VBoxManage clonevm crowbar-base-box --name "$MASCHINE_NAME" --register
+VBoxManage modifyvm "$MASCHINE_NAME" --memory "$COMPUTE_MEMORY" --ostype Ubuntu_64 
 
-VBoxManage modifyvm "$MASCHINE_NAME" --memory 2048 --ostype Debian_64  
+VBoxManage modifyvm "$MASCHINE_NAME" --nic3 hostonly
+VBoxManage modifyvm "$MASCHINE_NAME" --nic4 hostonly
+
+VBoxManage modifyvm "$MASCHINE_NAME" --macaddress3 auto
+VBoxManage modifyvm "$MASCHINE_NAME" --macaddress4 auto
+VBoxManage modifyvm "$MASCHINE_NAME" --nictype3 $IF_TYPE
+VBoxManage modifyvm "$MASCHINE_NAME" --nictype4 $IF_TYPE 
+VBoxManage modifyvm "$MASCHINE_NAME" --cableconnected3 on
+VBoxManage controlvm "$MASCHINE_NAME" setlinkstate3 on   
+VBoxManage modifyvm "$MASCHINE_NAME" --cableconnected4 on
+VBoxManage controlvm "$MASCHINE_NAME" setlinkstate4 on
+
+VBoxManage modifyvm "$MASCHINE_NAME" --hostonlyadapter3 vboxnet6
+VBoxManage modifyvm "$MASCHINE_NAME" --hostonlyadapter4 vboxnet7
+
+ 
 VBoxManage modifyvm "$MASCHINE_NAME" --vrdeport 5010-5030 --ioapic on #ioapic for centos pxe boot (verify it again)
 
 VBoxManage modifyvm "$MASCHINE_NAME" --boot1 net 

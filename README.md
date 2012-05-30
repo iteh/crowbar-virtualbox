@@ -9,7 +9,7 @@ The solution is inspired by:
 
 http://jedi.be/blog/2011/11/04/vagrant-virtualbox-hostonly-pxe-vlans/ 
 
-Its opinionated in a sense as we need ubuntu-12.04 to work, so fork an help to make it more useable for other distros :-)
+Its opinionated in a sense as we need ubuntu-12.04 to work, so fork and help to make it more useable for other distros :-)
 
 ## Prerequisites ##
 
