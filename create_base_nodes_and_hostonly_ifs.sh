@@ -21,15 +21,9 @@
 
 MASCHINE_NAME=$BASE_BOX_NAME
    
-IF_TYPE=82540EM #virtio causes problems (enumartion of device in ubunut 12.04
+# start with a fresh one ...
+unregister_and_delete_vm "$MASCHINE_NAME" 
 
-VMPATH="/"$(VBoxManage list systemproperties|grep "^Default"| cut -d '/' -f 2-)"/"$MASCHINE_NAME"/"
-DISKPATH="/"$VMPATH/""$MASCHINE_NAME".vdi"
-
-[ -f "$DISKPATH"  ] && echo "we already have a "$MASCHINE_NAME" instance, delete it with: VBoxManage unregistervm $MASCHINE_NAME --delete " && exit
-
-VBoxManage unregistervm "$MASCHINE_NAME" --delete
-rm -rf "$VMPATH"
 VBoxManage createvm --name "$MASCHINE_NAME" --ostype Ubuntu_64 --register
 VBoxManage storagectl "$MASCHINE_NAME" --name 'IDE Controller' --add ide
 VBoxManage storagectl "$MASCHINE_NAME" --name 'SATA Controller' --add sata --hostiocache off --sataportcount 1
@@ -43,7 +37,7 @@ VBoxManage modifyvm "$MASCHINE_NAME" --nic2 hostonly
 VBoxManage modifyvm "$MASCHINE_NAME" --macaddress1 auto
 VBoxManage modifyvm "$MASCHINE_NAME" --macaddress2 auto
 
-VBoxManage modifyvm "$MASCHINE_NAME" --nictype1 $IF_TYPE # virtio failed pxe boot using the intel card
+VBoxManage modifyvm "$MASCHINE_NAME" --nictype1 $IF_TYPE
 VBoxManage modifyvm "$MASCHINE_NAME" --nictype2 $IF_TYPE
 
 VBoxManage modifyvm "$MASCHINE_NAME" --cableconnected1 on
