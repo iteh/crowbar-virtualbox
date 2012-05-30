@@ -16,4 +16,10 @@
 
 CONFIG_SH_SOURCED=1
 
-BASE_BOX_NAME="crowbar-base-box"
+BASE_BOX_NAME="crowbar-base-box" 
+
+ADMIN_MEMORY=2048
+COMPUTE_MEMORY=512
+SWIFT_MEMORY=512
+IF_TYPE=82540EM #virtio causes problems (enumartion of device in ubunut 12.04
+
