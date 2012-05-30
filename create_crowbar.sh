@@ -23,9 +23,10 @@
 
 ISO=$1   
 IF_TYPE=82540EM
-ADMIN_MEMORY=2048 
+ 
 
-VBoxManage unregistervm crowbar_admin --delete  
+# start with a fresh one ...
+unregister_and_delete_vm crowbar_admin
 
 VBoxManage clonevm "$BASE_BOX_NAME" --name crowbar_admin --register
 
