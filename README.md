@@ -13,7 +13,13 @@ Its opinionated in a sense as we need ubuntu-12.04 to work, so fork and help to 
 
 ## Prerequisites ##
 
-A crowbar iso image. See https://github.com/dellcloudedge/crowbar/wiki/Build-Crowbar.ISO or use https://github.com/iteh/crowbar-iso to build one (ubuntu)
+A crowbar iso image. See https://github.com/dellcloudedge/crowbar/wiki/Build-Crowbar.ISO or use https://github.com/iteh/crowbar-iso to build one (ubuntu) 
+
+copy the config file to customize it 
+
+```
+cp config.sh.example config.sh
+```
 
 ## Usage ##
 
