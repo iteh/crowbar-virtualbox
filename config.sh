@@ -21,5 +21,9 @@ BASE_BOX_NAME="crowbar-base-box"
 ADMIN_MEMORY=2048
 COMPUTE_MEMORY=512
 SWIFT_MEMORY=512
-IF_TYPE=82540EM #virtio causes problems (enumartion of device in ubunut 12.04
+IF_TYPE=82540EM #virtio causes problems (enumartion of device in ubunut 12.04   
 
+VBOXNET_4_IP="192.168.124.1"  
+VBOXNET_5_IP="192.168.222.1"  
+VBOXNET_6_IP="192.168.225.1"  
+VBOXNET_7_IP="192.168.223.1"  

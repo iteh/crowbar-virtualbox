@@ -18,9 +18,9 @@
 
 source functions.sh
 
-ensure_vboxnet 4 "192.168.124.1"
-ensure_vboxnet 5 "192.168.122.1"
-ensure_vboxnet 6 "192.168.125.1"
-ensure_vboxnet 7 "192.168.123.1"
+ensure_vboxnet 4 "$VBOXNET_4_IP"
+ensure_vboxnet 5 "$VBOXNET_5_IP"
+ensure_vboxnet 6 "$VBOXNET_6_IP"
+ensure_vboxnet 7 "$VBOXNET_7_IP"
 
 
