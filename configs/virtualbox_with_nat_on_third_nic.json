@@ -1,0 +1,265 @@
+{
+  "id": "bc-template-network",
+  "description": "Instantiates network interfaces on the crowbar managed systems. Also manages the address pool",
+  "attributes": {
+    "network": {
+      "start_up_delay": 30,
+      "mode": "dual",
+      "teaming": {
+        "mode": 6
+      },
+      "interface_map": [
+        {
+          "pattern": "PowerEdge R610",
+          "bus_order": [
+            "0000:00/0000:00:01",
+            "0000:00/0000:00:03"
+          ]
+        },
+        {
+          "pattern": "PowerEdge R710",
+          "bus_order": [
+            "0000:00/0000:00:01",
+            "0000:00/0000:00:03"
+          ]
+        },
+        {
+          "pattern": "PowerEdge C6145",
+          "bus_order": [
+            "0000:00/0000:00:04",
+            "0000:00/0000:00:02"
+          ]
+        },
+        {
+          "pattern": "PowerEdge C2100",
+          "bus_order": [
+            "0000:00/0000:00:1c",
+            "0000:00/0000:00:07",
+            "0000:00/0000:00:09",
+            "0000:00/0000:00:01"
+          ]
+        },
+        {
+          "pattern": "C6100",
+          "bus_order": [
+            "0000:00/0000:00:01",
+            "0000:00/0000:00:03",
+            "0000:00/0000:00:07"
+          ]
+        },
+        {
+          "pattern": "product",
+          "bus_order": [
+            "0000:00/0000:00:01",
+            "0000:00/0000:00:02"
+          ]
+        }
+      ],
+      "conduit_map": [
+        {
+          "pattern": "team/.*/.*",
+          "conduit_list": { 
+            "intf0": {
+              "if_list": [ "1g1", "1g2" ],
+              "team_mode": 6
+            },
+            "intf1": {
+              "if_list": [ "1g1", "1g2" ],
+              "team_mode": 6
+            },
+            "intf2": {
+              "if_list": [ "1g1", "1g2" ],
+              "team_mode": 6
+            }
+          }
+        },
+        {
+          "pattern": "dual/.*/.*",
+          "conduit_list": { 
+            "intf0": {
+              "if_list": [ "1g1" ]
+            },
+            "intf1": {
+              "if_list": [ "1g2" ]
+            },
+            "intf2": {
+              "if_list": [ "1g3" ]
+            }
+          }
+        },
+        {
+          "pattern": "single/.*/.*",
+          "conduit_list": { 
+            "intf0": {
+              "if_list": [ "1g1" ]
+            },
+            "intf1": {
+              "if_list": [ "1g1" ]
+            },
+            "intf2": {
+              "if_list": [ "1g1" ]
+            }
+          }
+        },
+        {
+          "pattern": ".*/.*/.*",
+          "conduit_list": { 
+            "intf0": {
+              "if_list": [ "1g1" ]
+            },
+            "intf1": {
+              "if_list": [ "1g1" ]
+            },
+            "intf2": {
+              "if_list": [ "1g1" ]
+            }
+          }
+        },
+        {
+          "pattern": "mode/1g_adpt_count/role",
+          "conduit_list": { 
+            "intf0": {
+              "if_list": [ "1g1" ]
+            },
+            "intf1": {
+              "if_list": [ "1g1" ]
+            },
+            "intf2": {
+              "if_list": [ "1g1" ]
+            }
+          }
+        }
+      ],
+      "networks": {
+        "storage": {
+          "conduit": "intf1",
+          "vlan": 200,
+          "use_vlan": true,
+          "add_bridge": false,
+          "subnet": "192.168.225.0",
+          "netmask": "255.255.255.0",
+          "broadcast": "192.168.225.255",
+          "ranges": {
+            "host": { "start": "192.168.225.10", "end": "192.168.225.239" }
+          }
+        },
+        "public": {
+          "conduit": "intf1",
+          "vlan": 300,
+          "use_vlan": false,
+          "add_bridge": false,
+          "subnet": "192.168.222.0",
+          "netmask": "255.255.255.0",
+          "broadcast": "192.168.222.255",
+          "router": "192.168.222.1",
+	  "router_pref":  5,
+          "ranges": {
+            "host": { "start": "192.168.222.2", "end": "192.168.222.49" },
+            "dhcp": { "start": "192.168.222.50", "end": "192.168.222.127" }
+          }
+        },
+        "dynamic": {
+          "conduit": "intf2",
+          "vlan": 300,
+          "use_vlan": false,
+          "add_bridge": false,
+          "subnet": "10.0.4.0",
+          "netmask": "255.255.255.0",
+          "broadcast": "10.0.4.255",
+          "router": "10.0.4.2",
+          "router_pref":  1,
+          "ranges": {
+            "host": { "start": "10.0.4.15", "end": "10.0.4.49" },
+            "dhcp": { "start": "10.0.4.50", "end": "10.0.4.127" }
+          }
+        },
+        "nova_fixed": {
+          "conduit": "intf1",
+          "vlan": 500,
+          "use_vlan": true,
+          "add_bridge": true,
+          "subnet": "192.168.223.0",
+          "netmask": "255.255.255.0",
+          "broadcast": "192.168.223.255",
+          "router": "192.168.223.1",
+	  "router_pref": 20,
+          "ranges": {
+            "router": { "start": "192.168.223.1", "end": "192.168.223.49" },
+            "dhcp": { "start": "192.168.223.50", "end": "192.168.223.254" }
+          }
+        },
+        "nova_floating": {
+          "conduit": "intf1",
+          "vlan": 300,
+          "use_vlan": true,
+          "add_bridge": false,
+          "subnet": "192.168.222.128",
+          "netmask": "255.255.255.192",
+          "broadcast": "192.168.222.191",
+          "ranges": {
+            "host": { "start": "192.168.222.129", "end": "192.168.222.191" }
+          }
+        },
+        "bmc": {
+          "conduit": "bmc",
+          "vlan": 100,
+          "use_vlan": false,
+          "add_bridge": false,
+          "subnet": "192.168.224.0",
+          "netmask": "255.255.255.0",
+          "broadcast": "192.168.224.255",
+          "ranges": {
+            "host": { "start": "192.168.224.162", "end": "192.168.224.240" }
+          }
+        },
+        "bmc_vlan": {
+          "conduit": "intf2",
+          "vlan": 100,
+          "use_vlan": true,
+          "add_bridge": false,
+          "subnet": "192.168.224.0",
+          "netmask": "255.255.255.0",
+          "broadcast": "192.168.224.255",
+          "ranges": {
+            "host": { "start": "192.168.224.161", "end": "192.168.224.161" }
+          }
+        },
+        "admin": {
+          "conduit": "intf0",
+          "vlan": 100,
+          "use_vlan": false,
+          "add_bridge": false,
+          "subnet": "192.168.224.0",
+          "netmask": "255.255.255.0",
+          "broadcast": "192.168.224.255",
+          "router": "192.168.224.1",
+	  "router_pref": 10, 
+          "ranges": {
+            "admin": { "start": "192.168.224.10", "end": "192.168.224.11" },
+            "dhcp": { "start": "192.168.224.21", "end": "192.168.224.80" },
+            "host": { "start": "192.168.224.81", "end": "192.168.224.160" },
+            "switch": { "start": "192.168.224.241", "end": "192.168.224.250" }
+          }
+        }
+      }
+    }
+  },
+  "deployment": {
+    "network": {
+      "crowbar-revision": 0,
+      "element_states": {
+        "network": [ "readying", "ready", "applying" ]
+      },
+      "elements": {},
+      "element_order": [
+        [ "network" ]
+      ],
+      "config": {
+        "environment": "network-base-config",
+        "mode": "full",
+        "transitions": true,
+        "transition_list": [ "discovered", "reset", "delete" ]
+      }
+    }
+  }
+}
