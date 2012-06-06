@@ -27,4 +27,27 @@ will create the needed networks (default crowbar 122 - 125) and a base box to cl
 create_crowbar.sh /path/to/crowbar.iso
 ```              
 
-create a crowbar admin server and delete it first if it exists. 
+create a crowbar admin server and delete it first if it exists.  
+
+## Useful Virtualbox Commands ##
+
+```
+#list running vms:
+vboxmanage list runningvms
+
+#list vms:
+vboxmanage list vms
+
+#poweroff a vm:
+vboxmanage controlvm <vm-name> poweroff
+
+#start a vm in headless mode:
+vboxheadless -s <vm-name> poweroff
+
+#unregister and delete a vm:
+vboxmanage unregistervm <vm-name> --delete  
+
+# set nic config (this is maybe the wrong way as it forgets about this settings on a vm start)#
+/usr/lib/virtualbox/VBoxNetAdpCtl vboxnet0 192.168.124.1 netmask 255.255.255.0
+
+```
