@@ -27,17 +27,65 @@ cp config.sh.example config.sh
 create_base_nodes_and_hostonly_ifs.sh
 ```
 
-will create the needed networks (default crowbar 122 - 125) and a base box to clone from
+will create the needed networks (defaults in config.sh) and a base box to clone from
 
 ```
 create_crowbar.sh /path/to/crowbar.iso
+
 ```              
 
-create a crowbar admin server and delete it first if it exists.  
+creates a crowbar admin server and deletes it first if it exists. 
 
-## Useful Virtualbox Commands ##
+### Install crowbar admin ###
+
+"Crowbar Install Guide":https://github.com/dellcloudedge/crowbar/wiki/Install-crowbar
 
 ```
+# start the crowbar admin vm #
+VBoxHeadless -s crowbar_admin&
+
+#connect to it with the default IP  and crowbar:crowbar
+
+ssh crowbar@192.168.124.10
+
+# become root to start the install process #
+
+
+sudo -i
+# change /opt/dell/barclamps/network/chef/data_bags/crowbar/bc-template-network.json if needed 
+# e.g. use one of the configs in the configs directory
+
+cd /tftpboot/ubuntu_dvd/extra 
+./install admin.cr0wbar.org
+
+# watch the install with #
+
+tail -f /var/log/install.log 
+```
+
+after successful installation you can reach the individual vms on the vboxnet hostonly network. 
+check ```http://192.168.124.10:3000``` 
+
+### Install additional Nodes ###
+
+
+```
+./create_nova_node.sh crowbar-essex-1
+./create_nova_node.sh crowbar-essex-2
+./create_nova_node.sh crowbar-essex-3
+./create_nova_node.sh crowbar-essex-4
+./create_nova_node.sh crowbar-essex-5
+VBoxHeadless -s crowbar-essex-1&
+VBoxHeadless -s crowbar-essex-2&
+VBoxHeadless -s crowbar-essex-3&
+VBoxHeadless -s crowbar-essex-4&
+VBoxHeadless -s crowbar-essex-5&
+```
+
+they should show up in the crowbar admin ui
+
+## Useful Virtualbox Commands ##
+``` 
 #list running vms:
 vboxmanage list runningvms
 
