@@ -7,11 +7,13 @@ Provide a transportable virtual environment for crowbar/openstack
 
 The solution is inspired by:
 
-http://jedi.be/blog/2011/11/04/vagrant-virtualbox-hostonly-pxe-vlans/ 
+[vagrant virtualbox hostonly pxe vlans](http://jedi.be/blog/2011/11/04/vagrant-virtualbox-hostonly-pxe-vlans/) 
 
 Its opinionated in a sense as we need ubuntu-12.04 to work, so fork and help to make it more useable for other distros :-)
 
 ## Prerequisites ##
+
+A running and tested [VirtualBox environment](https://www.virtualbox.org/wiki/Downloads) with the VirtualBox Extension Pack installed. Tested on Ubuntu 12.04 LTS with the installation instructions and packages from [](https://www.virtualbox.org/wiki/Linux_Downloads) 
 
 A crowbar iso image. See https://github.com/dellcloudedge/crowbar/wiki/Build-Crowbar.ISO or use https://github.com/iteh/crowbar-iso to build one (ubuntu) 
 
@@ -24,17 +26,17 @@ cp config.sh.example config.sh
 ## Usage ##
 
 ```
-create_base_nodes_and_hostonly_ifs.sh
+./create_base_nodes_and_hostonly_ifs.sh
 ```
 
 will create the needed networks (defaults in config.sh) and a base box to clone from
 
 ```
-create_crowbar.sh /path/to/crowbar.iso
+./create_crowbar.sh /path/to/crowbar.iso
 
 ```              
 
-creates a crowbar admin server and deletes it first if it exists. 
+./creates a crowbar admin server and deletes it first if it exists. 
 
 ### Install crowbar admin ###
 
@@ -101,7 +103,6 @@ vboxheadless -s <vm-name> poweroff
 #unregister and delete a vm:
 vboxmanage unregistervm <vm-name> --delete  
 
-# set nic config (this is maybe the wrong way as it forgets about this settings on a vm start)#
-/usr/lib/virtualbox/VBoxNetAdpCtl vboxnet0 192.168.124.1 netmask 255.255.255.0
-
+# set nic config according to the settings in config.sh#
+./reset-network.sh
 ```
