@@ -13,7 +13,7 @@ Its opinionated in a sense as we need ubuntu-12.04 to work, so fork and help to 
 
 ## Prerequisites ##
 
-A running and tested [VirtualBox environment](https://www.virtualbox.org/wiki/Downloads) with the VirtualBox Extension Pack installed. Tested on Ubuntu 12.04 LTS with the installation instructions and packages from [](https://www.virtualbox.org/wiki/Linux_Downloads) 
+A running and tested [VirtualBox environment](https://www.virtualbox.org/wiki/Downloads) with the VirtualBox Extension Pack installed. Tested on Ubuntu 12.04 LTS with the installation instructions and packages from https://www.virtualbox.org/wiki/Linux_Downloads
 
 A crowbar iso image. See https://github.com/dellcloudedge/crowbar/wiki/Build-Crowbar.ISO or use https://github.com/iteh/crowbar-iso to build one (ubuntu) 
 
