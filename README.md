@@ -26,13 +26,14 @@ cp config.sh.example config.sh
 ## Usage ##
 
 ```
-./create_base_nodes_and_hostonly_ifs.sh
+./create_base_nodes_and_hostonly_ifs.sh   
+./reset-network.sh # just to be sure check with ifconfig
 ```
 
 will create the needed networks (defaults in config.sh) and a base box to clone from
 
 ```
-./create_crowbar.sh /path/to/crowbar.iso
+./create_crowbar.sh /absolute/path/to/crowbar.iso
 
 ```              
 
@@ -45,7 +46,20 @@ will create the needed networks (defaults in config.sh) and a base box to clone 
 ```
 # start the crowbar admin vm #
 VBoxHeadless -s crowbar_admin&
+```
+which gives you something like:
 
+```
+Oracle VM VirtualBox Headless Interface 4.1.18
+(C) 2008-2012 Oracle Corporation
+All rights reserved.
+
+VRDE server is listening on port 3389.
+```                                   
+
+As you must have the Extensionpack installed you could use a rdp client (there is one from microsoft for osx) to connect to the virtual machine and watch the install process.
+
+```
 #connect to it with the default IP  and crowbar:crowbar
 
 ssh crowbar@192.168.124.10
@@ -66,7 +80,15 @@ tail -f /var/log/install.log
 ```
 
 after successful installation you can reach the individual vms on the vboxnet hostonly network. 
-check ```http://192.168.124.10:3000``` 
+check ```http://192.168.124.10:3000```   
+
+now its a good time to create a snapshot of the admin server
+
+```
+# the --pause is essential if you did not stop the machine
+vboxmanage snapshot crowbar_admin take fresh-crowbar-admin-test --pause
+```  
+
 
 ### Install additional Nodes ###
 
