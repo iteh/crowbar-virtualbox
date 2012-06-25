@@ -21,7 +21,15 @@ BASE_BOX_NAME="crowbar-base-box"
 ADMIN_MEMORY=4048
 COMPUTE_MEMORY=2048
 SWIFT_MEMORY=512
-IF_TYPE=82540EM #virtio causes problems (enumartion of device in ubunut 12.04   
+
+# one of Am79C970A|Am79C973|82540EM|82543GC|82545EM|virtio  
+# according to http://humbledown.org/virtualbox-intel-vlan-tag-stripping.xhtml
+# the Intel Familiy does not work in VLAN setups
+# virtio causes problems (enumartion of device) in ubunut 12.04
+# please verify and update this information ...
+
+IF_TYPE=Am79C973  
+#IF_TYPE=82540EM  
 
 VBOXNET_4_IP="192.168.124.1"  
 VBOXNET_5_IP="192.168.222.1"  
