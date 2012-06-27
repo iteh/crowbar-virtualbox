@@ -106,7 +106,24 @@ VBoxHeadless -s crowbar-essex-4&
 VBoxHeadless -s crowbar-essex-5&
 ```
 
-they should show up in the crowbar admin ui
+they should show up in the crowbar admin ui 
+
+## Snapshots ##
+
+The scripting is not generic but uses the names chosen above
+### create a snapshot:
+
+./snapshot_cluster.sh "snapshot_name"     
+
+save the snapshot name somewere
+
+### restore a snapshot:
+
+./stop_cluster.sh
+./restore_from_snapshot.sh "snapshot_name" 
+./start_cluster.sh
+
+and give it some time, you are starting 6 vms at once!
 
 ## Useful Virtualbox Commands ##
 ``` 
