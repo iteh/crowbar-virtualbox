@@ -20,4 +20,18 @@ VBoxManage startvm crowbar-essex-1 --type headless
 VBoxManage startvm crowbar-essex-2 --type headless
 VBoxManage startvm crowbar-essex-3 --type headless
 VBoxManage startvm crowbar-essex-4 --type headless
-VBoxManage startvm crowbar-essex-5 --type headless
+VBoxManage startvm crowbar-essex-5 --type headless 
+
+# 3389
+vboxmanage controlvm crowbar_admin vrde on 
+# 5010
+vboxmanage controlvm crowbar-essex-1 vrde on
+# 5011
+vboxmanage controlvm crowbar-essex-2 vrde on
+# 5012
+vboxmanage controlvm crowbar-essex-3 vrde on
+# 5013
+vboxmanage controlvm crowbar-essex-4 vrde on
+# 5014
+vboxmanage controlvm crowbar-essex-5 vrde on
+
