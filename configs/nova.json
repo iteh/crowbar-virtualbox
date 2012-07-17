@@ -1,0 +1,83 @@
+{
+  "id": "bc-nova-proposal",
+  "deployment": {
+    "nova": {
+      "elements": {
+        "nova-multi-compute": [
+          "dc0-ff-ee-00-00-02.v1.tlabscloud.de",
+          "dc0-ff-ee-00-00-03.v1.tlabscloud.de"
+        ],
+        "nova-multi-controller": [
+          "dc0-ff-ee-00-00-01.v1.tlabscloud.de"
+        ]
+      },
+      "element_order": [
+        [
+          "nova-multi-controller"
+        ],
+        [
+          "nova-multi-compute"
+        ]
+      ],
+      "element_states": {
+        "nova-multi-compute": [
+          "readying",
+          "ready",
+          "applying"
+        ],
+        "nova-multi-controller": [
+          "readying",
+          "ready",
+          "applying"
+        ]
+      },
+      "config": {
+        "transition_list": [
+
+        ],
+        "environment": "nova-config-proposal",
+        "mode": "full",
+        "transitions": false
+      },
+      "crowbar-revision": 1
+    }
+  },
+  "description": "installs and configures the Openstack Nova component. It relies upon the network and glance barclamps for normal operation.",
+  "attributes": {
+    "nova": {
+      "user": "nova",
+      "glance_instance": "proposal",
+      "libvirt_type": "qemu",
+      "keystone_instance": "proposal",
+      "verbose": true,
+      "volume": {
+        "type": "local",
+        "volume_name": "nova-volumes",
+        "local_file": "/var/lib/nova/volume.raw",
+        "nova_volume_disks": [
+
+        ],
+        "local_size": 2000000000
+      },
+      "network": {
+        "network_size": 256,
+        "dhcp_enabled": true,
+        "num_networks": 1,
+        "ha_enabled": true,
+        "tenant_vlans": false,
+        "allow_same_net_traffic": false
+      },
+      "db": {
+        "user": "nova",
+        "database": "nova",
+        "password": "3uc685a27dtj",
+        "mysql_instance": "proposal"
+      },
+      "rabbit": {
+        "user": "nova",
+        "vhost": "/nova",
+        "password": "secure_password"
+      }
+    }
+  }
+}
