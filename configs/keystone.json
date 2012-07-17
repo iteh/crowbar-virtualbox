@@ -1,0 +1,75 @@
+{
+  "id": "bc-keystone-proposal",
+  "attributes": {
+    "keystone": {
+      "default": {
+        "password": "crowbar",
+        "username": "crowbar",
+        "tenant": "openstack"
+      },
+      "debug": true,
+      "sql_engine": "mysql",
+      "service": {
+        "token": "310521869416",
+        "tenant": "service"
+      },
+      "verbose": true,
+      "admin": {
+        "password": "crowbar",
+        "username": "admin",
+        "tenant": "admin"
+      },
+      "api": {
+        "service_port": 5000,
+        "service_host": "0.0.0.0",
+        "admin_host": "0.0.0.0",
+        "api_host": "0.0.0.0",
+        "admin_port": 35357,
+        "api_port": 5000
+      },
+      "sql": {
+        "min_pool_size": 5,
+        "idle_timeout": 30,
+        "pool_timeout": 200,
+        "max_pool_size": 10
+      },
+      "use_syslog": false,
+      "mysql_instance": "proposal",
+      "db": {
+        "database": "keystone",
+        "user": "keystone"
+      }
+    }
+  },
+  "deployment": {
+    "keystone": {
+      "elements": {
+        "keystone-server": [
+          "dc0-ff-ee-00-00-01.v1.tlabscloud.de"
+        ]
+      },
+      "config": {
+        "transitions": false,
+        "transition_list": [
+
+        ],
+        "mode": "full",
+        "environment": "keystone-config-proposal"
+      },
+      "crowbar-revision": 1,
+      "element_order": [
+        [
+          "keystone-server"
+        ]
+      ],
+      "element_states": {
+        "keystone-server": [
+          "readying",
+          "ready",
+          "applying"
+        ]
+      }
+    }
+  },
+  "description": "Centralized authentication and authorization service for OpenStack"
+}

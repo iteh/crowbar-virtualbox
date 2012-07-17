@@ -22,6 +22,7 @@
 [ -z $1 ] && echo "you must provide a maschine name" && exit
 
 MASCHINE_NAME=$1 
+MAC_NIC1=${2:-'auto'}
 
 # start with a fresh one ...
 unregister_and_delete_vm "$MASCHINE_NAME"
@@ -35,6 +36,7 @@ VBoxManage modifyvm "$MASCHINE_NAME" --memory "$COMPUTE_MEMORY" --ostype Ubuntu_
 VBoxManage modifyvm "$MASCHINE_NAME" --nic3 hostonly
 VBoxManage modifyvm "$MASCHINE_NAME" --nic4 hostonly
 
+VBoxManage modifyvm "$MASCHINE_NAME" --macaddress1 ${MAC_NIC1}
 VBoxManage modifyvm "$MASCHINE_NAME" --macaddress3 auto
 VBoxManage modifyvm "$MASCHINE_NAME" --macaddress4 auto
 VBoxManage modifyvm "$MASCHINE_NAME" --nictype3 $IF_TYPE

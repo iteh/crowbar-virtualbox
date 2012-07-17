@@ -1,0 +1,42 @@
+{
+  "description": "User Interface for OpenStack projects (code name Horizon)",
+  "deployment": {
+    "nova_dashboard": {
+      "element_order": [
+        [
+          "nova_dashboard-server"
+        ]
+      ],
+      "element_states": {
+        "nova_dashboard-server": [
+          "readying",
+          "ready",
+          "applying"
+        ]
+      },
+      "crowbar-revision": 1,
+      "config": {
+        "transitions": false,
+        "mode": "full",
+        "environment": "nova_dashboard-config-proposal",
+        "transition_list": [
+
+        ]
+      },
+      "elements": {
+        "nova_dashboard-server": [
+          "dc0-ff-ee-00-00-01.v1.tlabscloud.de"
+        ]
+      }
+    }
+  },
+  "attributes": {
+    "nova_dashboard": {
+      "sql_engine": "mysql",
+      "mysql_instance": "proposal",
+      "show_swift": false,
+      "keystone_instance": "proposal"
+    }
+  },
+  "id": "bc-nova_dashboard-proposal"
+}
