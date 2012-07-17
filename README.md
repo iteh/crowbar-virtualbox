@@ -23,6 +23,52 @@ copy the config file to customize it
 cp config.sh.example config.sh
 ```
 
+### Install Virtualbox on a remote Ubuntu maschine ###
+
+You need to have root access to the maschine you want to install Virtualbox. There are several steps needed to install Virtualbox. You can get more information about the installation at the following location:
+
+* [http://wiki.ubuntuusers.de/virtualbox/Installation](http://wiki.ubuntuusers.de/virtualbox/Installation)
+
+Virtualbox can be downloaded from: [https://www.virtualbox.org/wiki/Linux_Downloads](https://www.virtualbox.org/wiki/Linux_Downloads)
+
+First we must add the repository key and the apt repository itself to the apt environment:  
+
+Add one of the following lines according to your distribution to your /etc/apt/sources.list:
+
+````
+deb http://download.virtualbox.org/virtualbox/debian precise contrib
+deb http://download.virtualbox.org/virtualbox/debian oneiric contrib
+deb http://download.virtualbox.org/virtualbox/debian natty contrib
+deb http://download.virtualbox.org/virtualbox/debian maverick contrib non-free
+deb http://download.virtualbox.org/virtualbox/debian lucid contrib non-free
+deb http://download.virtualbox.org/virtualbox/debian karmic contrib non-free
+deb http://download.virtualbox.org/virtualbox/debian hardy contrib non-free
+deb http://download.virtualbox.org/virtualbox/debian squeeze contrib non-free
+deb http://download.virtualbox.org/virtualbox/debian lenny contrib non-free
+````
+
+Add the Oracle public key for apt-secure  
+
+```
+sudo wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add - 
+```
+
+The next step ist to update the apt cache and install Virtualbox:
+
+```
+sudo apt-get update 
+sudo apt-get install virtualbox-4.1       
+```
+    
+For remote access to the console and PXE booting we need the Virtualbox extension pack. 
+
+```
+wget http://download.virtualbox.org/virtualbox/4.1.18/Oracle_VM_VirtualBox_Extension_Pack-4.1.18-78361.vbox-extpack
+sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-4.1.4-74291.vbox-extpack    
+```
+    
+Now we are able to move on and configure the Virtualbox environment  
+
 ## Usage ##
 
 ```
@@ -34,19 +80,19 @@ will create the needed networks (defaults in config.sh) and a base box to clone 
 
 ```
 ./create_crowbar.sh /absolute/path/to/crowbar.iso
+```
 
-```              
-
-./creates a crowbar admin server and deletes it first if it exists. 
+creates a crowbar admin server and deletes it first if it exists. 
 
 ### Install crowbar admin ###
 
-"Crowbar Install Guide":https://github.com/dellcloudedge/crowbar/wiki/Install-crowbar
+[Crowbar Install Guide](https://github.com/dellcloudedge/crowbar/wiki/Install-crowbar)
 
 ```
-# start the crowbar admin vm #
+# start the crowbar admin vm
 VBoxHeadless -s crowbar_admin&
 ```
+
 which gives you something like:
 
 ```
@@ -55,7 +101,7 @@ Oracle VM VirtualBox Headless Interface 4.1.18
 All rights reserved.
 
 VRDE server is listening on port 3389.
-```                                   
+```
 
 As you must have the Extensionpack installed you could use a rdp client (there is one from microsoft for osx) to connect to the virtual machine and watch the install process.
 
@@ -93,7 +139,7 @@ vboxmanage snapshot crowbar_admin take fresh-crowbar-admin-test --pause
 ### Install additional Nodes ###
 
 
-```
+```bash
 ./create_nova_node.sh crowbar-essex-1
 ./create_nova_node.sh crowbar-essex-2
 ./create_nova_node.sh crowbar-essex-3
@@ -121,7 +167,8 @@ save the snapshot name somewhere (or use ````vboxmanage showvminfo <vm_name>````
 
 ````./stop_cluster.sh
 ./restore_from_snapshot.sh "snapshot_name" 
-./start_cluster.sh ````
+./start_cluster.sh 
+````
 
 and give it some time, you are starting 6 vms at once!   
 
