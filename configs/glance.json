@@ -1,0 +1,114 @@
+{
+  "description": "Glance service (image registry and delivery service) for the cloud",
+  "id": "bc-glance-proposal",
+  "attributes": {
+    "glance": {
+      "enable_caching": false,
+      "images": [
+        "http://<ADMINWEB>/files/ami/ubuntu-11.04-server-cloudimg-amd64.tar.gz"
+      ],
+      "pid_directory": "/var/run/glance",
+      "swift_store_user": "glance_user",
+      "swift_store_key": "glance_key",
+      "use_cachemanagement": false,
+      "image_cache_stall_timeout": 86400,
+      "swift_store_auth_address": "127.0.0.1:8080/v1.0",
+      "filesystem_store_datadir": "/var/lib/glance/images",
+      "prefetcher": {
+        "debug": false,
+        "verbose": true,
+        "log_file": "/var/log/glance/prefetcher.log",
+        "config_file": "/etc/glance/glance-prefetcher.conf"
+      },
+      "working_directory": "/var/lib/glance",
+      "mysql_instance": "proposal",
+      "pruner": {
+        "debug": false,
+        "verbose": true,
+        "log_file": "/var/log/glance/pruner.log",
+        "config_file": "/etc/glance/glance-pruner.conf"
+      },
+      "notifier_strategy": "noop",
+      "keystone_instance": "proposal",
+      "default_store": "file",
+      "use_syslog": false,
+      "image_cache_max_size": 10737418240,
+      "swift_store_create_container_on_put": false,
+      "scrubber": {
+        "debug": false,
+        "verbose": true,
+        "log_file": "/var/log/glance/scrubber.log",
+        "config_file": "/etc/glance/glance-scrubber.conf"
+      },
+      "image_cache_grace_period": 3600,
+      "service_password": "549579744146",
+      "api": {
+        "debug": false,
+        "bind_open_address": false,
+        "verbose": true,
+        "log_file": "/var/log/glance/api.log",
+        "config_file": "/etc/glance/glance-api.conf",
+        "bind_port": 9292,
+        "paste_ini": "/etc/glance/glance-api-paste.ini"
+      },
+      "service_user": "glance",
+      "registry": {
+        "debug": false,
+        "bind_open_address": false,
+        "verbose": true,
+        "log_file": "/var/log/glance/registry.log",
+        "config_file": "/etc/glance/glance-registry.conf",
+        "bind_port": 9191,
+        "paste_ini": "/etc/glance/glance-registry-paste.ini"
+      },
+      "swift_store_container": "glance",
+      "use_keystone": true,
+      "cache": {
+        "debug": false,
+        "verbose": true,
+        "log_file": "/var/log/glance/scrubber.log",
+        "config_file": "/etc/glance/glance-scrubber.conf"
+      },
+      "sqlite_connection": "sqlite:////var/lib/glance/glance.sqlite",
+      "reaper": {
+        "debug": false,
+        "verbose": true,
+        "log_file": "/var/log/glance/reaper.log",
+        "config_file": "/etc/glance/glance-reaper.conf"
+      },
+      "database": "mysql",
+      "sql_idle_timeout": 3600,
+      "image_cache_datadir": "/var/lib/glance/image-cache"
+    }
+  },
+  "deployment": {
+    "glance": {
+      "crowbar-revision": 1,
+      "element_order": [
+        [
+          "glance-server"
+        ]
+      ],
+      "element_states": {
+        "glance-server": [
+          "readying",
+          "ready",
+          "applying"
+        ]
+      },
+      "elements": {
+        "glance-server": [
+          "dc0-ff-ee-00-00-01.v1.tlabscloud.de"
+        ]
+      },
+      "config": {
+        "mode": "full",
+        "transition_list": [
+
+        ],
+        "transitions": false,
+        "environment": "glance-config-proposal"
+      }
+    }
+  }
+}
