@@ -31,6 +31,8 @@ ensure_vboxnet () {
     VBoxManage hostonlyif create
   fi
   
+  #disable the dhcpserver on the hostonly if
+  #VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet$VBOX_NET_NUMBER 
   # hackish reset to something not used so virtualbox sets up everything (including routing)
   VBoxManage hostonlyif ipconfig vboxnet$VBOX_NET_NUMBER --ip 4.3.2.1 --netmask 255.255.255.0
   # the real config  
