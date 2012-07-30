@@ -37,6 +37,7 @@ VBoxManage modifyvm "$MASCHINE_NAME" --nic3 hostonly
 VBoxManage modifyvm "$MASCHINE_NAME" --nic4 hostonly
 
 VBoxManage modifyvm "$MASCHINE_NAME" --macaddress1 ${MAC_NIC1}
+
 VBoxManage modifyvm "$MASCHINE_NAME" --macaddress3 auto
 VBoxManage modifyvm "$MASCHINE_NAME" --macaddress4 auto
 VBoxManage modifyvm "$MASCHINE_NAME" --nictype3 $IF_TYPE

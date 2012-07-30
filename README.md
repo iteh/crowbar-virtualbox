@@ -159,27 +159,17 @@ they should show up in the crowbar admin ui
 The scripting is not generic but uses the names chosen above
 ### create a snapshot:
 
-````./snapshot_cluster.sh "snapshot_name"````     
+./snapshot_cluster.sh "snapshot_name"     
 
-save the snapshot name somewhere (or use ````vboxmanage showvminfo <vm_name>```` to inspect the machine) 
+save the snapshot name somewere
 
 ### restore a snapshot:
 
-````./stop_cluster.sh
+./stop_cluster.sh
 ./restore_from_snapshot.sh "snapshot_name" 
 ./start_cluster.sh 
-````
 
-and give it some time, you are starting 6 vms at once!   
-
-if you experience any problems after restoring first try to reboot all machines, or issue a hard reboot with the ````./stop_cluster.sh```` ````./start_cluster.sh```` commands.
-
-
-you can list the current snapshots by inspecting the state of one of the machines:
-
-````vboxmanage showvminfo crowbar-essex-1````
-
-at the bottom is a list of snapshots. The one with a star indicates the currently used one.
+and give it some time, you are starting 6 vms at once!
 
 ## Useful Virtualbox Commands ##
 ``` 
