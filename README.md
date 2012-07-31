@@ -90,7 +90,13 @@ creates a crowbar admin server and deletes it first if it exists.
 
 ```
 # start the crowbar admin vm
-VBoxHeadless -s crowbar_admin&
+VBoxHeadless -s crowbar_admin&  
+```
+or use 
+
+```
+VBoxManage startvm crowbar_admin --type headless
+VBoxManage controlvm crowbar_admin vrde on
 ```
 
 which gives you something like:
@@ -114,9 +120,11 @@ ssh crowbar@192.168.124.10
 
 
 sudo -i
-# change /opt/dell/barclamps/network/chef/data_bags/crowbar/bc-template-network.json if needed 
-# e.g. use one of the configs in the configs directory
+```
 
+At this point in time you must choose the network config you want to use. You can find some pre-defined configs in the configs folder. Please read the corresponding README for further instructions! This might change the admin IP address of the test cluster!
+
+```
 cd /tftpboot/ubuntu_dvd/extra 
 ./install admin.cr0wbar.org
 
