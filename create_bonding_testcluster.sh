@@ -33,7 +33,7 @@
 set -e
 set -x
 
-ISO_FILE=`pwd`/crowbar.iso
+ISO_FILE=${1:-"`pwd`/crowbar.iso"}
 
 ./create_crowbar.sh ${ISO_FILE}
 VBoxManage modifyvm crowbar_admin --nic3 none
