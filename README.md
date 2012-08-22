@@ -23,9 +23,9 @@ copy the config file to customize it
 cp config.sh.example config.sh
 ```
 
-### Install Virtualbox on a remote Ubuntu maschine ###
+### Install Virtualbox on a remote Ubuntu machine ###
 
-You need to have root access to the maschine you want to install Virtualbox. There are several steps needed to install Virtualbox. You can get more information about the installation at the following location:
+You need to have root access to the machine you want to install Virtualbox. There are several steps needed to install Virtualbox. You can get more information about the installation at the following location:
 
 * [http://wiki.ubuntuusers.de/virtualbox/Installation](http://wiki.ubuntuusers.de/virtualbox/Installation)
 
