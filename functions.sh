@@ -36,7 +36,7 @@ ensure_vboxnet () {
   # hackish reset to something not used so virtualbox sets up everything (including routing)
   VBoxManage hostonlyif ipconfig vboxnet$VBOX_NET_NUMBER --ip 4.3.2.1 --netmask 255.255.255.0
   # the real config  
-  VBoxManage hostonlyif ipconfig vboxnet$VBOX_NET_NUMBER --ip $VBOX_NET_IP --netmask 255.255.255.0
+  VBoxManage hostonlyif ipconfig vboxnet$VBOX_NET_NUMBER --ip $VBOX_NET_IP --netmask $VBOXNET_MASK
 }   
 
 unregister_and_delete_vm () {
