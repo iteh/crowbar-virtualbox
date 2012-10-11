@@ -14,9 +14,9 @@
 # limitations under the License.
 #
 
-VBoxManage controlvm crowbar-essex-1 poweroff
-VBoxManage controlvm crowbar-essex-2 poweroff
-VBoxManage controlvm crowbar-essex-3 poweroff
-VBoxManage controlvm crowbar-essex-4 poweroff
-VBoxManage controlvm crowbar-essex-5 poweroff
+for I in 5 4 3 2 1 
+do
+  VBoxManage controlvm crowbar-essex-${I} poweroff 
+done
+
 VBoxManage controlvm crowbar_admin poweroff

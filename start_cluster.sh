@@ -16,22 +16,18 @@
 
 
 VBoxManage startvm crowbar_admin --type headless
-VBoxManage startvm crowbar-essex-1 --type headless
-VBoxManage startvm crowbar-essex-2 --type headless
-VBoxManage startvm crowbar-essex-3 --type headless
-VBoxManage startvm crowbar-essex-4 --type headless
-VBoxManage startvm crowbar-essex-5 --type headless 
+VBoxManage controlvm crowbar_admin vrde on # 3389
 
-# 3389
-vboxmanage controlvm crowbar_admin vrde on 
-# 5010
-vboxmanage controlvm crowbar-essex-1 vrde on
-# 5011
-vboxmanage controlvm crowbar-essex-2 vrde on
-# 5012
-vboxmanage controlvm crowbar-essex-3 vrde on
-# 5013
-vboxmanage controlvm crowbar-essex-4 vrde on
-# 5014
-vboxmanage controlvm crowbar-essex-5 vrde on
+for I in 1 2 3 
+do
+  VBoxManage startvm crowbar-essex-${I} --type headless  
+  # starting at 5010  crowbar-essex-${I} -> 5010 - 1 + ${I}
+  VBoxManage controlvm crowbar-essex-${I} vrde on  
+  
+done
 
+for I in 4 5 
+do
+  VBoxManage startvm crowbar-essex-${I} --type headless
+  VBoxManage controlvm crowbar-essex-${I} vrde on
+done
