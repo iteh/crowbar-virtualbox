@@ -328,15 +328,15 @@ To start over use:
 The scripting is not generic but uses the names chosen above
 ### create a snapshot:
 
-./snapshot_cluster.sh "snapshot_name"     
+    ./snapshot_cluster.sh "snapshot_name"     
 
 save the snapshot name somewere
 
 ### restore a snapshot:
 
-./stop_cluster.sh
-./restore_from_snapshot.sh "snapshot_name" 
-./start_cluster.sh 
+    ./stop_cluster.sh
+    ./restore_from_snapshot.sh "snapshot_name" 
+    ./start_cluster.sh 
 
 and give it some time, you are starting 6 vms at once!
 
