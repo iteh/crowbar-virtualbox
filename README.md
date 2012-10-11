@@ -18,7 +18,7 @@ Its opinionated in a sense as we need ubuntu-12.04 to work, so fork and help to 
 
 A running and tested [VirtualBox environment](https://www.virtualbox.org/wiki/Downloads) with the VirtualBox Extension Pack installed. Tested on Ubuntu 12.04 LTS with the installation instructions and packages from [https://www.virtualbox.org/wiki/Linux_Downloads](https://www.virtualbox.org/wiki/Linux_Downloads)
 
-A crowbar iso image. See https://github.com/dellcloudedge/crowbar/wiki/Build-Crowbar.ISO or use https://github.com/iteh/crowbar-iso to build one (ubuntu) 
+A crowbar iso image. See [https://github.com/dellcloudedge/crowbar/wiki/Build-Crowbar.ISO](https://github.com/dellcloudedge/crowbar/wiki/Build-Crowbar.ISO) or use [https://github.com/iteh/crowbar-iso](https://github.com/iteh/crowbar-iso) to build one (ubuntu) 
 
 copy the config file to customize it 
 
@@ -325,8 +325,9 @@ To start over use:
 ## Snapshots ##
 
 
-The scripting is not generic but uses the names chosen above
-### create a snapshot:
+The scripting is not generic but uses the names chosen above 
+
+### create a snapshot: ###
 
     ./snapshot_cluster.sh "snapshot_name"     
 
