@@ -25,11 +25,12 @@ SWIFT_MEMORY=512
 # one of Am79C970A|Am79C973|82540EM|82543GC|82545EM|virtio  
 # according to http://humbledown.org/virtualbox-intel-vlan-tag-stripping.xhtml
 # the Intel Familiy does not work in VLAN setups
+# As of VirtualBox 4.2.0 (released 2012-09-13) this should be fixed https://www.virtualbox.org/ticket/10429
 # virtio causes problems (enumartion of device) in ubunut 12.04
 # please verify and update this information ...
 
-IF_TYPE=Am79C973
-#IF_TYPE=82540EM
+#IF_TYPE=Am79C973
+IF_TYPE=82545EM
 
 VBOXNET_4_IP="10.124.0.1"
 VBOXNET_5_IP="10.125.0.1"
