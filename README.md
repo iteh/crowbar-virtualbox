@@ -74,6 +74,10 @@ Next create the crowbar environment with the following commands (tested on Ubunt
 
      ./create_bonding_testcluster.sh /home/crowbar/crowbar.iso 
 
+or
+
+     ./create_testcluster.sh /home/crowbar/crowbar.iso 
+
 Now you can start the the admin server. Either use the Virtualbox GUI or run one of the following commands:
 
 On your local environment you can use the GUI:
@@ -366,3 +370,17 @@ unregister and delete a vm:
 set nic config according to the settings in config.sh
 
     ./reset-network.sh
+
+## known issues
+
+with crowbar-betty_openstack-build.2870.ubuntu-12.04.iso
+
+https://github.com/aabes/barclamp-network/commit/9b8fc52a85d90e3d8ef3876d10c9ac0c20b9e26d
+
+fix it with
+
+    vi /opt/dell/barclamps/network/chef/cookbooks/network/recipes/default.rb
+    knife cookbook upload network -o /opt/dell/barclamps/network/chef/cookbooks
+
+## notes
+
