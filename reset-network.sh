@@ -16,6 +16,9 @@
 # limitations under the License.
 #
 
+set -e
+set -x
+
 source functions.sh
 
 ensure_vboxnet 4 "$VBOXNET_4_IP"
