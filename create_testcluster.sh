@@ -50,4 +50,9 @@ do
   VBoxManage modifyvm crowbar-essex-${I} --macaddress2 c0ffee00010${I}
   VBoxManage modifyvm crowbar-essex-${I} --macaddress3 c0ffee00020${I}
   VBoxManage modifyvm crowbar-essex-${I} --macaddress4 c0ffee00030${I}
+
+  VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc1 allow-all 
+  VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc2 allow-all 
+  VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc3 allow-all 
+  VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc4 allow-all 
 done
