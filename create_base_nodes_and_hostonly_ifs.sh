@@ -26,7 +26,7 @@ unregister_and_delete_vm "$MASCHINE_NAME"
 
 VBoxManage createvm --name "$MASCHINE_NAME" --ostype Ubuntu_64 --register
 VBoxManage storagectl "$MASCHINE_NAME" --name 'IDE Controller' --add ide
-VBoxManage storagectl "$MASCHINE_NAME" --name 'SATA Controller' --add sata --hostiocache off --sataportcount 1
+VBoxManage storagectl "$MASCHINE_NAME" --name 'SATA Controller' --add sata --hostiocache off --portcount 1
 
 VBoxManage createhd --filename "$DISKPATH" --size 20000 --format VDI 
 VBoxManage storageattach "$MASCHINE_NAME" --storagectl 'SATA Controller' --port 0 --device 0 --type hdd --medium "$DISKPATH" 
