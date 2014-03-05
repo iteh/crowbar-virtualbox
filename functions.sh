@@ -18,6 +18,12 @@
 
 FUNCTIONS_SH_SOURCED=1
 
+set_disk_path () {
+  [ -z $1 ] && echo "you must provide a boxname name as first param" && exit
+  VMPATH="/"$(VBoxManage list systemproperties|grep "^Default machine folder"| cut -d '/' -f 2-)"/"$1"/"
+  DISKPATH="/"$VMPATH/""$MASCHINE_NAME".vdi"
+}
+
 ensure_vboxnet () { 
   [ -z $1 ] && echo "you must provide a vboxnetnumber name as first param" && exit
   [ -z $2 ] && echo "you must provide a Ipadress as second param" && exit 
@@ -45,8 +51,7 @@ unregister_and_delete_vm () {
   
   MASCHINE_NAME=$1
   
-  VMPATH="/"$(VBoxManage list systemproperties|grep "^Default"| cut -d '/' -f 2-)"/"$MASCHINE_NAME"/"
-  DISKPATH="/"$VMPATH/""$MASCHINE_NAME".vdi"
+  set_disk_path "$MASCHINE_NAME" 
 
   if [ -f "$DISKPATH"  ] 
   then 
