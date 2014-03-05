@@ -21,6 +21,7 @@ BASE_BOX_NAME="crowbar-base-box"
 ADMIN_MEMORY=4048
 COMPUTE_MEMORY=2048
 SWIFT_MEMORY=512
+STORAGE_MEMORY=1024
 
 # one of Am79C970A|Am79C973|82540EM|82543GC|82545EM|virtio  
 # according to http://humbledown.org/virtualbox-intel-vlan-tag-stripping.xhtml
