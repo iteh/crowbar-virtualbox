@@ -19,7 +19,7 @@
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
 [ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
-VMPATH="/"$(VBoxManage list systemproperties|grep "^Default"| cut -d '/' -f 2-)"/swift/"
+set_disk_path "swift"
 DISKPATH_1="/"$VMPATH/"/swift-root.vdi"
 DISKPATH_2="/"$VMPATH/"/swift-store.vdi"
 
