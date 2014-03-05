@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash 
 #
 # Copyright 2012, Deutsche Telekom Laboratories 
 #
@@ -32,6 +32,9 @@
 #  eth3 will be set up in vboxnet7
 #
 
+[ -z $CONFIG_SH_SOURCED ] && source config.sh
+[ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
+
 set -e
 set -x
  
@@ -43,7 +46,7 @@ VBoxManage modifyvm crowbar_admin --macaddress1 c0ffee000000
 VBoxManage modifyvm crowbar_admin --macaddress2 c0ffee000100
 VBoxManage modifyvm crowbar_admin --macaddress3 c0ffee000200
 
-for I in 1 2 3 4 5 
+for I in 1 2 3 4 5 6
 do
   ./create_nova_node.sh crowbar-essex-${I} c0ffee00000${I}
   sleep 2
@@ -56,3 +59,16 @@ do
   VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc3 allow-all 
   VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc4 allow-all 
 done
+
+for I in 4 5 6
+do
+  set_disk_path "crowbar-essex-${I}"
+  DISKPATH_2="/"$VMPATH/"/storage.vdi"
+  VBoxManage createhd --filename "$DISKPATH_2" --size 5000 --format VDI
+  VBoxManage storageattach crowbar-essex-${I} --storagectl 'SATA Controller' --port 1 --device 0 --type hdd --medium "${DISKPATH_2}"
+  VBoxManage modifyvm "crowbar-essex-${I}" --memory "${STORAGE_MEMORY}"
+done
+
+echo "current registered crowbar VMs"
+
+`VBoxManage list vms|grep crowbar`
