@@ -18,7 +18,7 @@
 VBoxManage controlvm crowbar_admin poweroff
 sleep 2
 VBoxManage unregistervm crowbar_admin --delete
-for I in 1 2 3 4 5
+for I in 1 2 3 4 5 6
 do
   VBoxManage controlvm crowbar-essex-${I} poweroff
   sleep 2
