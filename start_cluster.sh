@@ -26,7 +26,7 @@ do
   
 done
 
-for I in 4 5 
+for I in 4 5 6
 do
   VBoxManage startvm crowbar-essex-${I} --type headless
   VBoxManage controlvm crowbar-essex-${I} vrde on
