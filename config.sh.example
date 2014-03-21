@@ -16,27 +16,27 @@
 
 CONFIG_SH_SOURCED=1
 
-BASE_BOX_NAME="crowbar-base-box"
+BASE_BOX_NAME="openstack-base-box"
 
 ADMIN_MEMORY=4048
 COMPUTE_MEMORY=2048
-SWIFT_MEMORY=512
 STORAGE_MEMORY=1024
 
-# one of Am79C970A|Am79C973|82540EM|82543GC|82545EM|virtio  
-# according to http://humbledown.org/virtualbox-intel-vlan-tag-stripping.xhtml
-# the Intel Familiy does not work in VLAN setups
-# As of VirtualBox 4.2.0 (released 2012-09-13) this should be fixed https://www.virtualbox.org/ticket/10429
-# virtio causes problems (enumartion of device) in ubunut 12.04
-# please verify and update this information ...
+NUMBER_OPENSTACK_NODES=6
+NUMBER_STORAGE_NODES=3
 
-#IF_TYPE=Am79C973
+NUMBER_COMPUTE_NICS=4
+NUMBER_STORAGE_NICS=4
+NUMBER_ADMIN_NICS=4
+
+# one of Am79C970A|Am79C973|82540EM|82543GC|82545EM|virtio  
+
 IF_TYPE=82545EM
 
-VBOXNET_4_IP="10.124.0.1"
-VBOXNET_5_IP="10.125.0.1"
-VBOXNET_6_IP="10.122.0.1"
-VBOXNET_7_IP="10.123.0.1"
+VBOXNET_4_IP="192.168.124.1"
+VBOXNET_5_IP="192.168.125.1"
+VBOXNET_6_IP="192.168.122.1"
+VBOXNET_7_IP="192.168.123.1"
 
-VBOXNET_MASK="255.255.0.0"
+VBOXNET_MASK="255.255.255.0"
 

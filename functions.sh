@@ -60,3 +60,38 @@ unregister_and_delete_vm () {
     rm -rf "$VMPATH"
   fi 
 }
+
+create_machine () {
+
+    MASCHINE_NUMBER=${4:-0}
+    NUMBER_OF_NICS=${3:-4}
+    MEMORY=$2
+    MASCHINE_NAME=$1
+
+# start with a fresh one ...
+    unregister_and_delete_vm "$MASCHINE_NAME" 
+
+    VBoxManage createvm --name "$MASCHINE_NAME" --ostype Ubuntu_64 --register
+    VBoxManage modifyvm "$MASCHINE_NAME" --memory $MEMORY
+    VBoxManage storagectl "$MASCHINE_NAME" --name 'IDE Controller' --add ide
+    VBoxManage storagectl "$MASCHINE_NAME" --name 'SATA Controller' --add sata --hostiocache off --portcount 1
+
+    set_disk_path $MASCHINE_NAME
+    VBoxManage createhd --filename "$DISKPATH" --size 20000 --format VDI 
+    VBoxManage storageattach "$MASCHINE_NAME" --storagectl 'SATA Controller' --port 0 --device 0 --type hdd --medium "$DISKPATH" 
+
+    N=$MASCHINE_NUMBER
+
+    for i in `seq 1 $NUMBER_OF_NICS`;
+    do 
+	VBoxManage modifyvm "$MASCHINE_NAME" --nic$i hostonly
+	VBoxManage modifyvm "$MASCHINE_NAME" --nictype$i $IF_TYPE
+	VBoxManage modifyvm "$MASCHINE_NAME" --cableconnected$i on
+	VBoxManage controlvm "$MASCHINE_NAME" setlinkstate$i on
+	VBoxManage modifyvm "$MASCHINE_NAME" --hostonlyadapter$i vboxnet$(($i + 3))
+	VBoxManage modifyvm "$MASCHINE_NAME" --macaddress$i c0ffee000${N}0${i}
+	VBoxManage modifyvm "$MASCHINE_NAME" --vrdeport 5010-5030 
+	VBoxManage modifyvm "$MASCHINE_NAME" --ioapic on #ioapic for centos pxe boot (verify it again)
+	VBoxManage modifyvm "$MASCHINE_NAME" --nicpromisc$i allow-all
+    done
+}

@@ -37,38 +37,39 @@
 
 set -e
 set -x
- 
-ISO_FILE=${1:-"`pwd`/crowbar.iso"}
 
-./create_crowbar.sh ${ISO_FILE}
-
-VBoxManage modifyvm crowbar_admin --macaddress1 c0ffee000000
-VBoxManage modifyvm crowbar_admin --macaddress2 c0ffee000100
-VBoxManage modifyvm crowbar_admin --macaddress3 c0ffee000200
-
-for I in 1 2 3 4 5 6
-do
-  ./create_nova_node.sh crowbar-essex-${I} c0ffee00000${I}
-  sleep 2
-  VBoxManage modifyvm crowbar-essex-${I} --macaddress2 c0ffee00010${I}
-  VBoxManage modifyvm crowbar-essex-${I} --macaddress3 c0ffee00020${I}
-  VBoxManage modifyvm crowbar-essex-${I} --macaddress4 c0ffee00030${I}
-
-  VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc1 allow-all 
-  VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc2 allow-all 
-  VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc3 allow-all 
-  VBoxManage modifyvm crowbar-essex-${I}  --nicpromisc4 allow-all 
+#create the hostonly networks, do it at least four times as we start at 4
+for i in 1 2 3 4;
+do 
+  ./reset-network.sh
 done
 
-for I in 4 5 6
+ISO_FILE=${1:-"`pwd`/crowbar.iso"}
+
+NODE_NAME="testcluster-admin"
+
+create_machine $NODE_NAME $ADMIN_MEMORY $NUMBER_ADMIN_NICS 
+
+VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --device 0 --port 1 --type dvddrive --medium "$ISO_FILE"
+VBoxManage modifyvm $NODE_NAME --boot1 disk
+
+echo "start it with VBoxHeadless -s crowbar_admin"
+
+for I in `seq 1 $NUMBER_OPENSTACK_NODES`
 do
-  set_disk_path "crowbar-essex-${I}"
+  create_machine testcluster-node-${I} $COMPUTE_MEMORY $NUMBER_COMPUTE_NICS $I 
+done
+
+for I in `seq $(($NUMBER_OPENSTACK_NODES + 1)) $(($NUMBER_STORAGE_NODES + $NUMBER_OPENSTACK_NODES))`
+do
+  NODE_NAME="testcluster-node-${I}"
+  create_machine $NODE_NAME $STORAGE_MEMORY $NUMBER_STORAGE_NICS $I
+  set_disk_path $NODE_NAME
   DISKPATH_2="/"$VMPATH/"/storage.vdi"
   VBoxManage createhd --filename "$DISKPATH_2" --size 5000 --format VDI
-  VBoxManage storageattach crowbar-essex-${I} --storagectl 'SATA Controller' --port 1 --device 0 --type hdd --medium "${DISKPATH_2}"
-  VBoxManage modifyvm "crowbar-essex-${I}" --memory "${STORAGE_MEMORY}"
+  VBoxManage storageattach $NODE_NAME --storagectl 'SATA Controller' --port 1 --device 0 --type hdd --medium "${DISKPATH_2}"
 done
 
 echo "current registered crowbar VMs"
 
-`VBoxManage list vms|grep crowbar`
+VBoxManage list vms|grep testcluster
