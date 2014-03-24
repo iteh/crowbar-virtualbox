@@ -15,12 +15,13 @@
 # limitations under the License.
 #
 
-VBoxManage controlvm crowbar_admin poweroff
-sleep 2
-VBoxManage unregistervm crowbar_admin --delete
-for I in 1 2 3 4 5 6
+set -x
+
+MACHINES=`VBoxManage list vms | grep $NODE_PREFIX| awk '{ gsub (/"/,""); print $1}'`
+
+for I in $MACHINES 
 do
-  VBoxManage controlvm crowbar-essex-${I} poweroff
+  VBoxManage controlvm $I poweroff
   sleep 2
-  VBoxManage unregistervm crowbar-essex-${I} --delete
+  VBoxManage unregistervm $I --delete
 done
