@@ -64,6 +64,10 @@ for I in `seq $(($NUMBER_OPENSTACK_NODES + 1)) $(($NUMBER_STORAGE_NODES + $NUMBE
 do
   NODE_NAME="testcluster-node-${I}"
   create_machine $NODE_NAME $STORAGE_MEMORY $NUMBER_STORAGE_NICS $I
+  # use different hostonly for cluster network
+  VBoxManage modifyvm "$NODE_NAME" --hostonlyadapter3 vboxnet7
+  VBoxManage modifyvm "$NODE_NAME" --hostonlyadapter4 vboxnet8
+
   set_disk_path $NODE_NAME
   DISKPATH_2="/"$VMPATH/"/storage.vdi"
   VBoxManage createhd --filename "$DISKPATH_2" --size 5000 --format VDI
