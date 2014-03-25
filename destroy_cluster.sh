@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Copyright 2012, Deutsche Telekom Laboratories 
 #
@@ -15,9 +15,12 @@
 # limitations under the License.
 #
 
+[ -z $CONFIG_SH_SOURCED ] && source config.sh
+[ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
+
 set -x
 
-MACHINES=`VBoxManage list vms | grep $NODE_PREFIX| awk '{ gsub (/"/,""); print $1}'`
+MACHINES=`VBoxManage list vms | grep $NODE_PREFIX | awk '{ gsub (/"/,""); print $1}'`
 
 for I in $MACHINES 
 do
