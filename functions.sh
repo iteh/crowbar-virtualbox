@@ -93,5 +93,6 @@ create_machine () {
 	VBoxManage modifyvm "$MASCHINE_NAME" --vrdeport 5010-5030 
 	VBoxManage modifyvm "$MASCHINE_NAME" --ioapic on #ioapic for centos pxe boot (verify it again)
 	VBoxManage modifyvm "$MASCHINE_NAME" --nicpromisc$i allow-all
+        VBoxManage modifyvm "$MASCHINE_NAME" --boot1 net
     done
 }
