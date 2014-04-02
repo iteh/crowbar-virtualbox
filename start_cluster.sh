@@ -15,18 +15,14 @@
 #
 
 
-VBoxManage startvm crowbar_admin --type headless
-VBoxManage controlvm crowbar_admin vrde on # 3389
+[ -z $CONFIG_SH_SOURCED ] && source config.sh
+[ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
-for I in 1 2 3 
-do
-  VBoxManage startvm crowbar-essex-${I} --type headless  
-  # starting at 5010  crowbar-essex-${I} -> 5010 - 1 + ${I}
-  VBoxManage controlvm crowbar-essex-${I} vrde on  
-  
-done
+set -x
 
-for I in 4 5 6
+MACHINES=`VBoxManage list vms | grep $NODE_PREFIX | awk '{ gsub (/"/,""); print $1}'`
+
+for I in $MACHINES
 do
   VBoxManage startvm crowbar-essex-${I} --type headless
   VBoxManage controlvm crowbar-essex-${I} vrde on

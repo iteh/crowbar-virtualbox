@@ -16,9 +16,14 @@
 
 [ -z $1 ] && echo "you must provide a snapshot name" && exit
 
-VBoxManage snapshot crowbar_admin restore "$1" 
-VBoxManage snapshot crowbar-essex-1 restore "$1" 
-VBoxManage snapshot crowbar-essex-2 restore "$1" 
-VBoxManage snapshot crowbar-essex-3 restore "$1"
-VBoxManage snapshot crowbar-essex-4 restore "$1" 
-VBoxManage snapshot crowbar-essex-5 restore "$1" 
+[ -z $CONFIG_SH_SOURCED ] && source config.sh
+[ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
+
+set -x
+
+MACHINES=`VBoxManage list vms | grep $NODE_PREFIX | awk '{ gsub (/"/,""); print $1}'`
+
+for I in $MACHINES
+do
+  VBoxManage snapshot "$I" restore "$1" 
+done
