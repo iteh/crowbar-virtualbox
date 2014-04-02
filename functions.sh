@@ -77,7 +77,7 @@ create_machine () {
     VBoxManage storagectl "$MASCHINE_NAME" --name 'SATA Controller' --add sata --hostiocache off --portcount 1
 
     set_disk_path $MASCHINE_NAME
-    VBoxManage createhd --filename "$DISKPATH" --size 20000 --format VDI 
+    VBoxManage createhd --filename "$DISKPATH" --size 30000 --format VDI 
     VBoxManage storageattach "$MASCHINE_NAME" --storagectl 'SATA Controller' --port 0 --device 0 --type hdd --medium "$DISKPATH" 
 
     N=$MASCHINE_NUMBER
