@@ -63,7 +63,7 @@ unregister_and_delete_vm () {
 
 create_machine () {
 
-    MASCHINE_NUMBER=${4:-0}
+    MASCHINE_NUMBER=${4:-9}
     NUMBER_OF_NICS=${3:-4}
     MEMORY=$2
     MASCHINE_NAME=$1
