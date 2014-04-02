@@ -14,9 +14,15 @@
 # limitations under the License.
 #
 
-for I in 5 4 3 2 1 
+[ -z $CONFIG_SH_SOURCED ] && source config.sh
+[ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
+
+set -x
+
+MACHINES=`VBoxManage list vms | grep $NODE_PREFIX | awk '{ gsub (/"/,""); print $1}'`
+
+for I in $MACHINES
 do
-  VBoxManage controlvm crowbar-essex-${I} poweroff 
+  VBoxManage controlvm ${I} poweroff
 done
 
-VBoxManage controlvm crowbar_admin poweroff

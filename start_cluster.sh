@@ -24,6 +24,6 @@ MACHINES=`VBoxManage list vms | grep $NODE_PREFIX | awk '{ gsub (/"/,""); print 
 
 for I in $MACHINES
 do
-  VBoxManage startvm crowbar-essex-${I} --type headless
-  VBoxManage controlvm crowbar-essex-${I} vrde on
+  VBoxManage startvm ${I} --type headless
+  VBoxManage controlvm ${I} vrde on
 done
