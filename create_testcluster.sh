@@ -46,23 +46,33 @@ done
 
 ISO_FILE=${1:-"`pwd`/crowbar.iso"}
 
-NODE_NAME="testcluster-admin"
+NODE_NAME="${NODE_PREFIX}admin"
 
 create_machine $NODE_NAME $ADMIN_MEMORY $NUMBER_ADMIN_NICS 
 
 VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --device 0 --port 1 --type dvddrive --medium "$ISO_FILE"
 VBoxManage modifyvm $NODE_NAME --boot1 disk
 
-echo "start it with VBoxHeadless -s crowbar_admin"
+echo "start it with VBoxHeadless -s $NODE_NAME"
+
+NODE_NAME=${NODE_PREFIX}gateway
+
+create_machine $NODE_NAME $GATEWAY_MEMORY $NUMBER_GATEWAY_NICS $(($NUMBER_STORAGE_NODES + $NUMBER_OPENSTACK_NODES + 1))
+
+VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --device 0 --port 1 --type dvddrive --medium "$ISO_FILE"
+VBoxManage modifyvm $NODE_NAME --boot1 disk
+VBoxManage modifyvm $NODE_NAME --nic5 nat
+
+echo "start it with VBoxHeadless -s $NODE_NAME"
 
 for I in `seq 1 $NUMBER_OPENSTACK_NODES`
 do
-  create_machine testcluster-node-${I} $COMPUTE_MEMORY $NUMBER_COMPUTE_NICS $I 
+  create_machine ${NODE_PREFIX}node-${I} $COMPUTE_MEMORY $NUMBER_COMPUTE_NICS $I 
 done
 
 for I in `seq $(($NUMBER_OPENSTACK_NODES + 1)) $(($NUMBER_STORAGE_NODES + $NUMBER_OPENSTACK_NODES))`
 do
-  NODE_NAME="testcluster-node-${I}"
+  NODE_NAME="${NODE_PREFIX}-node-${I}"
   create_machine $NODE_NAME $STORAGE_MEMORY $NUMBER_STORAGE_NICS $I
   # use different hostonly for cluster network
   VBoxManage modifyvm "$NODE_NAME" --hostonlyadapter3 vboxnet7
@@ -74,6 +84,6 @@ do
   VBoxManage storageattach $NODE_NAME --storagectl 'SATA Controller' --port 1 --device 0 --type hdd --medium "${DISKPATH_2}"
 done
 
-echo "current registered crowbar VMs"
+echo "current registered VMs"
 
-VBoxManage list vms|grep testcluster
+VBoxManage list vms|grep ${NODE_PREFIX}
