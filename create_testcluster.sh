@@ -75,8 +75,8 @@ do
   NODE_NAME="${NODE_PREFIX}-node-${I}"
   create_machine $NODE_NAME $STORAGE_MEMORY $NUMBER_STORAGE_NICS $I
   # use different hostonly for cluster network
-  VBoxManage modifyvm "$NODE_NAME" --hostonlyadapter3 vboxnet7
-  VBoxManage modifyvm "$NODE_NAME" --hostonlyadapter4 vboxnet8
+  VBoxManage modifyvm "$NODE_NAME" --hostonlyadapter3 vboxnet8
+  VBoxManage modifyvm "$NODE_NAME" --hostonlyadapter4 vboxnet9
 
   set_disk_path $NODE_NAME
   DISKPATH_2="/"$VMPATH/"/storage.vdi"
