@@ -25,6 +25,8 @@ for I in $MACHINES
 do
   if ! echo $RUNNING_MASCHINES| grep $I &> /dev/null
   then 
+    PORT=`VBoxManage showvminfo testcluster--node-4|grep "VRDE port"|awk '{print $3}'`
+    echo Starting $I watch progress with a Windows Remote Client at port $PORT 
     VBoxManage startvm ${I} --type headless
     VBoxManage controlvm ${I} vrde on
   else 
