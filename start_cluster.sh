@@ -18,12 +18,16 @@
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
 [ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
-set -x
-
 MACHINES=`VBoxManage list vms | grep $NODE_PREFIX | awk '{ gsub (/"/,""); print $1}'`
+RUNNING_MASCHINES=`VBoxManage list runningvms | grep $NODE_PREFIX | awk '{ gsub (/"/,""); print $1}'`
 
 for I in $MACHINES
 do
-  VBoxManage startvm ${I} --type headless
-  VBoxManage controlvm ${I} vrde on
+  if ! echo $RUNNING_MASCHINES| grep $I &> /dev/null
+  then 
+    VBoxManage startvm ${I} --type headless
+    VBoxManage controlvm ${I} vrde on
+  else 
+    echo $I already running; 
+  fi
 done
