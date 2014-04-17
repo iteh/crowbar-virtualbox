@@ -22,16 +22,9 @@ set -x
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
 [ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
-# find maximum number of nics
-for v in $NUMBER_COMPUTE_NICS $NUMBER_STORAGE_NICS $NUMBER_ADMIN_NICS
-do
-  [[ $v -gt $max ]] && max=$v
-done
-
 # create max number hostonly ifs starting at 4
-for i in `seq 1 $max`
+for I in `seq 4 10`
 do
-  I=$(($i + 3))
   NET="VBOXNET_${I}_IP"
   ensure_vboxnet $I ${!NET}
 done
