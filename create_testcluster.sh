@@ -16,8 +16,7 @@
 #
 
 #
-# This script will help you to create a test cluster with 5 nodes that
-# use 4 NICs so that you can simulate a more complex real set up.
+# This script will help you to create a test cluster for OpenStack
 #
 # The MAC addresses follow a simple rule
 #  - All addresses start with c0ffee00
@@ -25,11 +24,6 @@
 #  - the last byte represents the node in our system (e.g. admin:00, node1:01)
 #  
 #  So the second NIC (eth1) on the third node would have c0ffee000103
-#
-#  eth0 will be set up in vboxnet4
-#  eth1 will be set up in vboxnet5
-#  eth2 will be set up in vboxnet6 
-#  eth3 will be set up in vboxnet7
 #
 
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
@@ -61,7 +55,8 @@ create_machine $NODE_NAME $GATEWAY_MEMORY $NUMBER_GATEWAY_NICS $(($NUMBER_STORAG
 
 VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --device 0 --port 1 --type dvddrive --medium "$ISO_FILE"
 VBoxManage modifyvm $NODE_NAME --boot1 disk
-VBoxManage modifyvm $NODE_NAME --nic5 nat
+VBoxManage modifyvm $NODE_NAME --nic6 nat
+VBoxManage modifyvm $NODE_NAME --hostonlyadapter5 vboxnet10
 
 echo "start it with VBoxHeadless -s $NODE_NAME"
 
