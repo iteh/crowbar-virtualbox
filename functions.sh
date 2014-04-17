@@ -62,8 +62,8 @@ unregister_and_delete_vm () {
 }
 
 create_machine () {
-
-    MASCHINE_NUMBER=${4:-9}
+    NEXT_FREE_NUMBER=$((`VBoxManage list vms | grep $NODE_PREFIX | wc -l` + 1))
+    MASCHINE_NUMBER=${4:-$NEXT_FREE_NUMBER}
     NUMBER_OF_NICS=${3:-4}
     MEMORY=$2
     MASCHINE_NAME=$1

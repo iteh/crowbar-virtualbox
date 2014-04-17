@@ -42,7 +42,7 @@ ISO_FILE=${1:-"`pwd`/crowbar.iso"}
 
 NODE_NAME="${NODE_PREFIX}admin"
 
-create_machine $NODE_NAME $ADMIN_MEMORY $NUMBER_ADMIN_NICS 
+create_machine $NODE_NAME $ADMIN_MEMORY $NUMBER_ADMIN_NICS 0
 
 VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --device 0 --port 1 --type dvddrive --medium "$ISO_FILE"
 VBoxManage modifyvm $NODE_NAME --boot1 disk
