@@ -18,11 +18,11 @@
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
 [ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
-set -x
+[ $DEBUG -gt 0 ] && set -x
 
 NODE_NAME="${NODE_PREFIX}Network-Controller"
 
-create_machine $NODE_NAME $NETWORK_CONTROLLER_MEMORY $NUMBER_NETWORK_CONTROLLER_NICS 160 $NETWORK_CONTROLLER_DISKSIZE  
+create_machine $NODE_NAME $NETWORK_CONTROLLER_MEMORY $NUMBER_NETWORK_CONTROLLER_NICS 160 $NETWORK_CONTROLLER_DISKSIZE
 
 VBoxManage modifyvm $NODE_NAME --cpus 4
 VBoxManage modifyvm $NODE_NAME --boot1 disk
@@ -37,7 +37,7 @@ echo "start it with VBoxManage startvm ${NODE_NAME} --type headless"
 
 NODE_NAME="${NODE_PREFIX}Network-Manager"
 
-create_machine $NODE_NAME $NETWORK_MANAGER_MEMORY $NUMBER_NETWORK_MANAGER_NICS 161 $NETWORK_MANAGER_DISKSIZE  
+create_machine $NODE_NAME $NETWORK_MANAGER_MEMORY $NUMBER_NETWORK_MANAGER_NICS 176 $NETWORK_MANAGER_DISKSIZE
 
 VBoxManage modifyvm $NODE_NAME --boot1 disk
 VBoxManage modifyvm $NODE_NAME --cpus 2
@@ -52,7 +52,7 @@ echo "start it with VBoxManage startvm ${NODE_NAME} --type headless"
 
 NODE_NAME="${NODE_PREFIX}Network-Service-Node"
 
-create_machine $NODE_NAME $NETWORK_SERVICE_NODE_MEMORY $NUMBER_NETWORK_SERVICE_NODE_NICS 161 $NETWORK_SERVICE_NODE_DISKSIZE  
+create_machine $NODE_NAME $NETWORK_SERVICE_NODE_MEMORY $NUMBER_NETWORK_SERVICE_NODE_NICS 177 $NETWORK_SERVICE_NODE_DISKSIZE
 
 VBoxManage modifyvm $NODE_NAME --boot1 disk
 VBoxManage modifyvm $NODE_NAME --cpus 2
@@ -67,7 +67,7 @@ echo "start it with VBoxManage startvm ${NODE_NAME} --type headless"
 
 NODE_NAME="${NODE_PREFIX}Network-L3Gateway"
 
-create_machine $NODE_NAME $NETWORK_L3GATEWAY_MEMORY $NUMBER_NETWORK_L3GATEWAY_NICS 161 $NETWORK_L3GATEWAY_DISKSIZE  
+create_machine $NODE_NAME $NETWORK_L3GATEWAY_MEMORY $NUMBER_NETWORK_L3GATEWAY_NICS 178 $NETWORK_L3GATEWAY_DISKSIZE
 
 VBoxManage modifyvm $NODE_NAME --boot1 disk
 VBoxManage modifyvm $NODE_NAME --cpus 2
