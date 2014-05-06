@@ -33,7 +33,7 @@ set -e
 set -x
 
 #create the hostonly networks, do it at least four times as we start at 4
-for i in 1 2 3 4;
+for i in 1 2 3 4 5;
 do 
   ./reset-network.sh
 done
