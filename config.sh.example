@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+DEBUG=0 # set to something greater than 0 to get debug output
+
 CONFIG_SH_SOURCED=1
 
 NODE_PREFIX="testcluster-"

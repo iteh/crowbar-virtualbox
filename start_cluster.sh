@@ -18,6 +18,8 @@
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
 [ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
+[ $DEBUG -gt 0 ] && set -x
+
 MACHINES=`VBoxManage list vms | grep $NODE_PREFIX | awk '{ gsub (/"/,""); print $1}'`
 RUNNING_MASCHINES=`VBoxManage list runningvms | grep $NODE_PREFIX | awk '{ gsub (/"/,""); print $1}'`
 

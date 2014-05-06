@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-set -x
+[ $DEBUG -gt 0 ] && set -x
 
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
 [ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
