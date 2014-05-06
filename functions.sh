@@ -63,6 +63,7 @@ unregister_and_delete_vm () {
 
 create_machine () {
     NEXT_FREE_NUMBER=$((`VBoxManage list vms | grep $NODE_PREFIX | wc -l` + 1))
+    DISKSIZE=${5:30000}
     MASCHINE_NUMBER=${4:-$NEXT_FREE_NUMBER}
     NUMBER_OF_NICS=${3:-4}
     MEMORY=$2
@@ -77,7 +78,7 @@ create_machine () {
     VBoxManage storagectl "$MASCHINE_NAME" --name 'SATA Controller' --add sata --hostiocache off --portcount 1
 
     set_disk_path $MASCHINE_NAME
-    VBoxManage createhd --filename "$DISKPATH" --size 30000 --format VDI 
+    VBoxManage createhd --filename "$DISKPATH" --size $DISKSIZE --format VDI 
     VBoxManage storageattach "$MASCHINE_NAME" --storagectl 'SATA Controller' --port 0 --device 0 --type hdd --medium "$DISKPATH" 
 
     N=$MASCHINE_NUMBER
