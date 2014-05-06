@@ -29,7 +29,7 @@
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
 [ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
 
-set -x
+[ $DEBUG -gt 0 ] && set -x
 
 #create the hostonly networks, do it at least five times as we start at 4
 for i in 1 2 3 4 5;
