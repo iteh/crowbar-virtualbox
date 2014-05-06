@@ -72,10 +72,10 @@ create_machine () {
 # start with a fresh one ...
     unregister_and_delete_vm "$MASCHINE_NAME" 
 
-    VBoxManage createvm --name "$MASCHINE_NAME" --ostype Ubuntu_64 --register
+    VBoxManage createvm --name "$MASCHINE_NAME" --ostype Ubuntu_64 --acpi on --register
     VBoxManage modifyvm "$MASCHINE_NAME" --memory $MEMORY
     VBoxManage storagectl "$MASCHINE_NAME" --name 'IDE Controller' --add ide
-    VBoxManage storagectl "$MASCHINE_NAME" --name 'SATA Controller' --add sata --hostiocache off --portcount 1
+    VBoxManage storagectl "$MASCHINE_NAME" --name 'SATA Controller' --add sata --hostiocache off --portcount 1 --controller IntelAHCI
 
     set_disk_path $MASCHINE_NAME
     VBoxManage createhd --filename "$DISKPATH" --size $DISKSIZE --format VDI 
