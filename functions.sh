@@ -81,19 +81,22 @@ create_machine () {
     VBoxManage createhd --filename "$DISKPATH" --size $DISKSIZE --format VDI 
     VBoxManage storageattach "$MASCHINE_NAME" --storagectl 'SATA Controller' --port 0 --device 0 --type hdd --medium "$DISKPATH" 
 
-    N=$MASCHINE_NUMBER
+    #get a two digit hex number for the maschine number
+    
+    N=`printf "%02x" $MASCHINE_NUMBER`
 
     for i in `seq 1 $NUMBER_OF_NICS`;
     do 
-	VBoxManage modifyvm "$MASCHINE_NAME" --nic$i hostonly
-	VBoxManage modifyvm "$MASCHINE_NAME" --nictype$i $IF_TYPE
-	VBoxManage modifyvm "$MASCHINE_NAME" --cableconnected$i on
-	VBoxManage controlvm "$MASCHINE_NAME" setlinkstate$i on
-	VBoxManage modifyvm "$MASCHINE_NAME" --hostonlyadapter$i vboxnet$(($i + 3))
-	VBoxManage modifyvm "$MASCHINE_NAME" --macaddress$i c0ffee000${N}0${i}
-	VBoxManage modifyvm "$MASCHINE_NAME" --vrdeport 5010-5030 
-	VBoxManage modifyvm "$MASCHINE_NAME" --ioapic on #ioapic for centos pxe boot (verify it again)
-	VBoxManage modifyvm "$MASCHINE_NAME" --nicpromisc$i allow-all
+  VBoxManage modifyvm "$MASCHINE_NAME" --nic$i hostonly
+  VBoxManage modifyvm "$MASCHINE_NAME" --nictype$i $IF_TYPE
+  VBoxManage modifyvm "$MASCHINE_NAME" --cableconnected$i on
+  VBoxManage controlvm "$MASCHINE_NAME" setlinkstate$i on
+  VBoxManage modifyvm "$MASCHINE_NAME" --hostonlyadapter$i vboxnet$(($i + 3))
+  VBoxManage modifyvm "$MASCHINE_NAME" --macaddress$i c0ffee00${N}0${i}
+  VBoxManage modifyvm "$MASCHINE_NAME" --vrdeport 5010-5030 
+  VBoxManage modifyvm "$MASCHINE_NAME" --ioapic on #ioapic for centos pxe boot (verify it again)
+  VBoxManage modifyvm "$MASCHINE_NAME" --nicpromisc$i allow-all
         VBoxManage modifyvm "$MASCHINE_NAME" --boot1 net
     done
+
 }
