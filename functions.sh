@@ -20,8 +20,8 @@ FUNCTIONS_SH_SOURCED=1
 
 set_disk_path () {
   [ -z $1 ] && echo "you must provide a boxname name as first param" && exit
-  VMPATH="/"$(VBoxManage list systemproperties|grep "^Default machine folder"| cut -d '/' -f 2-)"/"$1"/"
-  DISKPATH="/"$VMPATH/""$MASCHINE_NAME".vdi"
+  VMPATH="/"$(VBoxManage list systemproperties|grep "^Default machine folder"| cut -d '/' -f 2-)"/"$1""
+  DISKPATH="${VMPATH}${MASCHINE_NAME}.vdi"
 }
 
 ensure_vboxnet () { 
