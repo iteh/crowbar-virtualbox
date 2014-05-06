@@ -46,7 +46,7 @@ create_machine $NODE_NAME $ADMIN_MEMORY $NUMBER_ADMIN_NICS 0
 VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --device 0 --port 1 --type dvddrive --medium "$ISO_FILE"
 VBoxManage modifyvm $NODE_NAME --boot1 disk
 
-echo "start it with VBoxHeadless -s $NODE_NAME"
+echo "start it with VBoxManage startvm ${NODE_NAME} --type headless"
 
 NODE_NAME=${NODE_PREFIX}gateway
 
@@ -57,7 +57,7 @@ VBoxManage modifyvm $NODE_NAME --boot1 disk
 VBoxManage modifyvm $NODE_NAME --nic6 nat
 VBoxManage modifyvm $NODE_NAME --hostonlyadapter5 vboxnet10
 
-echo "start it with VBoxHeadless -s $NODE_NAME"
+echo "start it with VBoxManage startvm ${NODE_NAME} --type headless"
 
 for I in `seq 1 $NUMBER_OPENSTACK_NODES`
 do
