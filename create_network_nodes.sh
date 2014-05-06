@@ -28,7 +28,7 @@ VBoxManage modifyvm $NODE_NAME --cpus 4
 VBoxManage modifyvm $NODE_NAME --boot1 disk
 
 #VBoxManage modifyvm $VM1 --nic1 bridged --bridgeadapter1 en3
-VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium $NETWORK_CONTROLLER_ISO  
+VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium "$NETWORK_CONTROLLER_ISO"  
 
 echo "start it with VBoxManage startvm ${NODE_NAME} --type headless"
 
@@ -43,7 +43,7 @@ VBoxManage modifyvm $NODE_NAME --boot1 disk
 VBoxManage modifyvm $NODE_NAME --cpus 2
 
 #VBoxManage modifyvm $NODE_NAME --nic1 bridged --bridgeadapter1 en3
-VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium $NETWORK_MANAGER_ISO 
+VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium "$NETWORK_MANAGER_ISO" 
 
 echo "start it with VBoxManage startvm ${NODE_NAME} --type headless"
 
@@ -58,7 +58,7 @@ VBoxManage modifyvm $NODE_NAME --boot1 disk
 VBoxManage modifyvm $NODE_NAME --cpus 2
 
 #VBoxManage modifyvm $NODE_NAME --nic1 bridged --bridgeadapter1 en3 --nic2 bridged --bridgeadapter1 en5
-VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium $NETWORK_SERVICE_NODE_ISO 
+VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium "$NETWORK_SERVICE_NODE_ISO" 
 
 echo "start it with VBoxManage startvm ${NODE_NAME} --type headless"
 
@@ -73,7 +73,7 @@ VBoxManage modifyvm $NODE_NAME --boot1 disk
 VBoxManage modifyvm $NODE_NAME --cpus 2
 
 #VBoxManage modifyvm $NODE_NAME --nic1 bridged --bridgeadapter1 en3 --nic2 bridged --bridgeadapter1 en5 --nic3 bridged --bridgeadapter1 en7
-VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium $NETWORK_L3GATEWAY_ISO 
+VBoxManage storageattach $NODE_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium "$NETWORK_L3GATEWAY_ISO" 
 
 echo "start it with VBoxManage startvm ${NODE_NAME} --type headless"
 
