@@ -16,7 +16,6 @@
 # limitations under the License.
 #
 
-set -e
 set -x
 
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
