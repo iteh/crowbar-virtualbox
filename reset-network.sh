@@ -16,10 +16,10 @@
 # limitations under the License.
 #
 
-[ $DEBUG -gt 0 ] && set -x
-
 [ -z $CONFIG_SH_SOURCED ] && source config.sh
 [ -z $FUNCTIONS_SH_SOURCED ] && source functions.sh
+
+[ $DEBUG -gt 0 ] && set -x
 
 # create max number hostonly ifs starting at 4
 for I in `seq 4 10`
